@@ -1,6 +1,6 @@
 import express from 'express';
 import Role from '../models/role.mjs';
-import { assignRole, assignPermission } from '../controllers/roleController.mjs';
+import { getRolePermission, setRolePermission, deleteRolePermission } from '../controllers/roleController.mjs';
 import {
   createRecord, getAllRecords, getRecordById, updateRecordById, deleteRecordById,
 } from '../controllers/genericController.mjs';
@@ -8,25 +8,16 @@ import validateRoleName from '../middlewares/roleMiddlewares.mjs';
 
 const roleRouter = express.Router();
 
-// Gets all roles
-roleRouter.get('/', getAllRecords(Role));
+// Role operations
+roleRouter.get('/', getAllRecords(Role)); // Gets all roles
+roleRouter.get('/:id', getRecordById(Role)); // Returns the role of the specified Id
+roleRouter.post('/', validateRoleName, createRecord(Role)); // Create a new role.
+roleRouter.put('/:id', validateRoleName, updateRecordById(Role)); // Updates a role
+roleRouter.delete('/:id', deleteRecordById(Role)); // Deletes a role.
 
-// Returns the role of the specified Id
-roleRouter.get('/:id', getRecordById(Role));
-
-// Create a new role.
-roleRouter.post('/', validateRoleName, createRecord(Role));
-
-// Updates a role
-roleRouter.put('/:id', validateRoleName, updateRecordById(Role));
-
-// Deletes a role.
-roleRouter.delete('/:id', deleteRecordById(Role));
-
-// assigns a role to a user.
-roleRouter.get('/assign', assignRole);
-
-// TO:DO thing of a better route
-roleRouter.post('/permission', assignPermission);
+// Role/Permission operations
+roleRouter.get('/:id/permissions', getRolePermission); // Gets all related permissions
+roleRouter.post('/:id/permissions/:permission', setRolePermission); // Adds permission to role
+roleRouter.delete('/:id/permissions/:permission', deleteRolePermission); // Removes permission from role
 
 export default roleRouter;

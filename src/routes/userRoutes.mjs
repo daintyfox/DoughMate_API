@@ -5,26 +5,23 @@ import {
   createRecord, getAllRecords, getRecordById, updateRecordById, deleteRecordById,
 } from '../controllers/genericController.mjs';
 import User from '../models/user.mjs';
-import getMe from '../controllers/userController.mjs';
+import {
+  deleteUserRole, getMe, getUserRole, setUserRole,
+} from '../controllers/userController.mjs';
 
 const userRouter = express.Router();
 
-// Gets all users
-userRouter.get('/', checkPermissions('READ_USER'), getAllRecords(User));
+// User operations
+userRouter.get('/', checkPermissions('READ_USER'), getAllRecords(User)); // Gets all Users
+userRouter.get('/me', getMe); // Returns requester's profile
+userRouter.get('/:id', getRecordById(User)); // Gets specified user
+userRouter.post('/', validateUserCreate, createRecord(User)); // Create a new user.
+userRouter.put('/:id', validateUserUpdate, updateRecordById(User)); // Updates a user
+userRouter.delete('/:id', deleteRecordById(User)); // Deletes a User.
 
-// Returns the user of the specified Id
-userRouter.get('/:id', getRecordById(User));
-
-// Create a new user.
-userRouter.post('/', validateUserCreate, createRecord(User));
-
-// Updates a user
-userRouter.put('/:id', validateUserUpdate, updateRecordById(User));
-
-// Deletes a User.
-userRouter.delete('/:id', deleteRecordById(User));
-
-// Returns logged in users profile
-userRouter.get('/profile', getMe);
+// User/Role operations
+userRouter.get('/:id/role', getUserRole); // gets the user's role
+userRouter.post('/:id/role/:roleId', setUserRole); // Sets a role to the user
+userRouter.delete('/:id/role', deleteUserRole); // deletes the user's role
 
 export default userRouter;

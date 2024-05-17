@@ -25,14 +25,4 @@ Object.values(models)
   .filter((model) => typeof model.associate === 'function')
   .forEach((model) => model.associate(models));
 
-/**
-// Delete the current permission table
-await Permission.sync({ force: true });
-// Repupulate the role table with up to date permissions
-permissions.forEach(async (name) => {
-  await Permission.create({ name });
-});
-*/
-// await User.create({ username: 'admin', password: 'admin' });
-
 export default sequelize;
