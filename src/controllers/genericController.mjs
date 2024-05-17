@@ -18,7 +18,7 @@ export const getRecordById = (model) => async (req, res) => {
   }
 
   try {
-    // Query database for role
+    // Query database for record
     const record = await model.findByPk(id);
 
     if (!record) {

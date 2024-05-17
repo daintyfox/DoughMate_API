@@ -5,6 +5,7 @@ import {
   createRecord, getAllRecords, getRecordById, updateRecordById, deleteRecordById,
 } from '../controllers/genericController.mjs';
 import User from '../models/user.mjs';
+import getMe from '../controllers/userController.mjs';
 
 const userRouter = express.Router();
 
@@ -23,11 +24,7 @@ userRouter.put('/:id', validateUserUpdate, updateRecordById(User));
 // Deletes a User.
 userRouter.delete('/:id', deleteRecordById(User));
 
-/**
 // Returns logged in users profile
-userRouter.get('/profile', (req, res) => {
-  // look into session to search the Id
-});
-*/
+userRouter.get('/profile', getMe);
 
 export default userRouter;

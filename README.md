@@ -19,6 +19,9 @@ Usage:
   for now api can be used with an app like POSTMAN to send and recieve data since no UI has been developed
 
 command for generating the jwtRS256 key
-  - ssh-keygen -t rsa -P "" -b 4096 -m PEM -f jwtRS256.key
+  - ssh-keygen -t rsa -b 4096 -m PEM -f jwtRS256.key
   - openssl rsa -in jwtRS256.key -pubout -outform PEM -out jwtRS256.key.pub
 
+.env values:
+  - JWT_PRIVATE_KEY
+  - JWT_PUBLIC_KEY

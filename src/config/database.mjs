@@ -33,5 +33,6 @@ permissions.forEach(async (name) => {
   await Permission.create({ name });
 });
 */
+// await User.create({ username: 'admin', password: 'admin' });
 
 export default sequelize;
